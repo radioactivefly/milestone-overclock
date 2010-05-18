@@ -105,7 +105,7 @@ So we skip this one. The next table accessed is our target, freq_table. By the s
 c004e4b8:	159f5068 	ldrne	r5, [pc, #104]	; c004e528 <_binary_omap2_clk_init_cpufreq_table_start+0x90>
 }}}
 
-The disassembler tells us that it's loading the address stored in 0xc004e528 into register r5. Let's see what's in this address:
+The disassembler tells us that it's loading the address stored in 0xc004e528 into register `r5`. Let's see what's in this address:
 
 {{{
 c004e528:	c050bb68 	subsgt	fp, r0, r8, ror #22
