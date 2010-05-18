@@ -1,0 +1,9 @@
+#summary How to disassemble key kernel functions
+
+= Introduction =
+
+Will describe here how to disassemble certain kernel functions that are useful to finding out the addresses of certain structures in kernel memory.
+
+= Details =
+
+TODO.
