@@ -14,7 +14,7 @@ or directly at:
 
 https://rsddownload.motorola.com/download/SHOLS_U2_02.31.0_UCASHLSMR2EMEAB1B805C.0R_PDS003_USASHLS00RTEU_P042_A005_HWp2a_1FF.sbf.gz
 
-Other Milestone firmwares will most likely require minor changes to the addresses, as described below. The addresses I'm using were found by disassembling certain functions extracted from kernel memory, see the [Disassembly] page. Testers welcome!
+Other Milestone firmwares will most likely require minor changes to the addresses, as described below. The addresses I'm using were found by disassembling certain functions extracted from kernel memory, please see the [Disassembly] page for more information. Testers welcome!
 
 = Usage =
 
