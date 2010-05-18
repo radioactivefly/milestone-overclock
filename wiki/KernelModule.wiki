@@ -14,7 +14,7 @@ or directly at:
 
 https://rsddownload.motorola.com/download/SHOLS_U2_02.31.0_UCASHLSMR2EMEAB1B805C.0R_PDS003_USASHLS00RTEU_P042_A005_HWp2a_1FF.sbf.gz
 
-Other Milestone firmwares will most likely require minor changes to the addresses, as described below. The addresses I'm using were found by disassembling certain functions extracted from kernel memory, see the Disassembly page. Testers welcome!
+Other Milestone firmwares will most likely require minor changes to the addresses, as described below. The addresses I'm using were found by disassembling certain functions extracted from kernel memory, see the [Disassembly] page. Testers welcome!
 
 = Usage =
 
@@ -38,7 +38,7 @@ insmod overclock.ko max_rate=800000 max_vsel=62
 
 Remember that you are merely changing the maximum possible value that cpufreq can choose to use.  The current speed may well be lower than the one specified if the phone is idle.  I recommend the use of the SetCPU app to effectively change the current frequency through its policies.
 
-You may also supply the addresses of the two needed in-memory kernel structures which may change with the firmware build and will probably have to be supplied either at load time with the freq_table_addr and mpu_opps_ptr_addr parameters or with their respective /proc entries.  Finding out the values will require live disassembly of kernel code.  See the project page for more information.
+You may also supply the addresses of the two needed in-memory kernel structures which may change with the firmware build and will probably have to be supplied either at load time with the freq_table_addr and mpu_opps_ptr_addr parameters or with their respective /proc entries.  Finding out the values will require live disassembly of kernel code.  See the [Disassembly] page for more information.
 
 Frequencies/Voltages that appear to work well together:
 
