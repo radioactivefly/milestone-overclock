@@ -116,7 +116,9 @@ Ignore the supposed instruction, this is definitely a kernel memory address with
 
 = CPUfreq policy =
 
-TODO
+We've made an important change before, but it's not enough. When we try to set a new frequency, CPUfreq will make a quick check to see if the value is within the minimum and maximum possible values defined in the CPUfreq policy. This policy is a simple structure derived from the frequency table we change before, but it's initialized only at boot time.
+
+Fortunately it's quite simple to change the policy in runtime. CPUfreq exports a function that returns its address, called cpufreq_cpu_get. All we have to do then is declare a struct cpufreq_policy pointing to this address and change a few values, namely policy->max and policy->cpuinfo.max_freq. Too easy :)
 
 = MPU opps table =
 
