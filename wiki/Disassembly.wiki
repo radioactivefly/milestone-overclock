@@ -11,7 +11,7 @@ _`/* Avoid registering the 120% Overdrive with CPUFreq */`_
 
 When you load SetCPU, or look at /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies, there's only a few available frequencies. Ever wondered where they come from?
 
-When you try to force a new frequency in SetCPU or by writing to /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq, it's simply ignored. Ever wondered why it does that?
+When you try to force a new frequency in SetCPU or by writing to /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq, it's simply ignored. Ever wondered why it does that?
 
 Meet CPUfreq, the linux kernel subsystem that runs the CPU power management. It provides an abstraction layer over the hardware and exposes an easy to use interface to manage the available clock speeds according to a power governor profile. Below this abstraction is a lowlevel platform driver that actually changes frequencies on behalf of CPUfreq. What we will do is hack both layers of CPUfreq in runtime so that it allows whatever frequency we tell it to.
 
