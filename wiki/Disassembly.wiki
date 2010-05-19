@@ -130,4 +130,42 @@ Fortunately it's quite simple to change the policy in runtime. CPUfreq exports a
 
 = MPU opps table =
 
-TODO
+So, CPUfreq is basically owned. It thinks our new frequency is valid and will eventually try to set it, which will trigger a call to __cpufreq_driver_target in drivers/cpufreq/cpufreq.c. In turn this calls the platform driver cpufreq_driver->target which in our case is omap_target from arch/arm/plat-omap/cpu-omap.c. Ignoring some of the code, which applies only to OMAP1 platforms, and looking specifically at the code block delimited by CONFIG_ARCH_OMAP3, we can see that it searches a table called mpu_opps looking for the entry that best matches the new frequency.
+
+What values are in this table? Well, mpu_opps is set in omap_pm_if_early_init from arch/arm/plat-omap/omap-pm-srf.c, which is called by omap2_init_common_hw from arch/arm/mach-omap2/io.c, which in turn comes from omap_3430sdp_init_irq in arch/arm/mach-omap2/board-3430sdp.c, initialized with a few tables, among which is omap3_mpu_rate_table. Finally, this table is defined in arch/arm/mach-omap2/omap3-opp.h:
+
+{{{
+tic struct omap_opp omap3_mpu_rate_table[] = {
+        {0, 0, 0},
+        /*OPP1*/  
+        {S125M, VDD1_OPP1, 0x1E},
+        /*OPP2*/
+        {S250M, VDD1_OPP2, 0x26},
+        /*OPP3*/
+        {S500M, VDD1_OPP3, 0x30},
+        /*OPP4*/
+        {S550M, VDD1_OPP4, 0x36},
+        /*OPP5*/
+        {S600M, VDD1_OPP5, 0x3C},
+};
+}}}
+
+So there we have it: despite our previous modifications, the frequency will never be above 600 MHz. Unless we manage to change it, of course... And I think we saw earlier this mpu_opps table, haven't we? That's right, the frequency we disassembled before uses mpu_opps to initialize freq_table. It's the address we discarted, the first load:
+
+{{{
+c004e4a4:	e59f3078 	ldr	r3, [pc, #120]	; c004e524 <_binary_omap2_clk_init_cpufreq_table_start+0x8c>
+...
+c004e4ac:	e5936000 	ldr	r6, [r3]
+}}}
+
+So what's at the address 0xc004e524?
+
+{{{
+c004e524:	c050c888 	subsgt	ip, r0, r8, lsl #17
+}}}
+
+Yes, another address! Testing will show that it points to the omap3_mpu_rate_table shown above. All we have to do is change the last entry, OPP5, and the omap driver will gladly set the frequency (previously S600M) and voltage (previously 0x3C) we define.
+
+= Conclusion =
+
+We now have the means to change the kernel memory to manipulate key kernel structures that define the maximum CPU frequency possible. This was done on a Motorola Milestone with Android 2.1. What is more, I'm confident that this same method is valid for any android phone. All it takes is for someone to follow this guide, studying the source code if it doesn't use same OMAP driver, and try to recompile the module for their kernel and use the correct addresses for it. There's a new realm of possibilities open, have fun!
