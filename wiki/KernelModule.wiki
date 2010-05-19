@@ -43,13 +43,13 @@ Remember that you are merely changing the maximum possible value that cpufreq ca
 
 You may also supply the addresses of the two needed in-memory kernel structures which may change with each firmware build and will probably have to be supplied either at load time with the freq_table_addr and mpu_opps_ptr_addr parameters or with their respective /proc entries.  Finding out the values will require live disassembly of kernel code.  See the [Disassembly] page for more information.
 
-Frequencies/Voltages that appear to work well together:
+Frequencies/Voltages that appear to work well together (thanks to kabaldan for corrections):
 
-|| *Frequency (KHz)* || *Voltage (mV)* ||
-|| 550000 || 56 ||
-|| 600000 || 62 ||
-|| 800000 || 68 ||
-|| 1000000 || 74 ||
-|| 1200000 || 80 ||
+|| *Frequency (KHz)* || * vsel * || *Voltage (V)* ||
+|| 550000 || 56 || 1.3 ||
+|| 600000 || 62 || 1.375 ||
+|| 800000 || 68 || 1.45 ||
+|| 1000000 || 74 || 1.525 ||
+|| 1200000 || 80 || 1.6 ||
 
-The maximum voltage I could use was 127. Frequencies above 1250000 usually reboot spontaneously.
+The maximum vsel I could use was 127. The safe limit according to processor specs is 96 (according to [http://wiki.droidmod.org/doku.php?id=vsel_calc wikidroid]. Frequencies above 1250000 usually reboot spontaneously.
