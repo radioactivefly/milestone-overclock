@@ -94,7 +94,7 @@ c004e52c:	c03ca7d8 	ldrsbtgt	sl, [ip], -r8
 c004e530:	c045e464 	subgt	lr, r5, r4, ror #8
 }}}
 
-Ok, don't panic. Focus on the source code: the first table that the code uses is mpu_opps, which is then assigned to prcm before the for loop, to check if prcm->rate is true. Its address comes from the global variable mpu_opps. We can reasonably assume that the compiler will load the address of mpu_opps into a register. The first time a load happens is in the fourth instruction:
+Ok, don't panic. Focus on the source code: the first table that the code uses is mpu_opps, a global variable, which is then assigned to prcm before the for loop, to check if prcm->rate is true. We can reasonably assume that the compiler will load the address of mpu_opps into a register. The first time a load happens is in the fourth instruction:
 
 {{{
 c004e4a4:	e59f3078 	ldr	r3, [pc, #120]	; c004e524 <_binary_omap2_clk_init_cpufreq_table_start+0x8c>
