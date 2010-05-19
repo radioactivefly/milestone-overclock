@@ -94,13 +94,19 @@ c004e52c:	c03ca7d8 	ldrsbtgt	sl, [ip], -r8
 c004e530:	c045e464 	subgt	lr, r5, r4, ror #8
 }}}
 
-Ok, don't panic. Focus on the source code: the first table that the code uses is prcm, in the for loop, to check if prcm->rate is true. We can reasonably assume that the compiler will load its address into a register. The first time this happens is in the fourth instruction:
+Ok, don't panic. Focus on the source code: the first table that the code uses is mpu_opps, which is then assigned to prcm before the for loop, to check if prcm->rate is true. Its address comes from the global variable mpu_opps. We can reasonably assume that the compiler will load the address of mpu_opps into a register. The first time a load happens is in the fourth instruction:
 
 {{{
 c004e4a4:	e59f3078 	ldr	r3, [pc, #120]	; c004e524 <_binary_omap2_clk_init_cpufreq_table_start+0x8c>
 }}}
 
-So we skip this one. The next table accessed is our target, freq_table. By the same logic it must be the loaded at the next ldr, which is the ninth instruction:
+And proceeds to load the value pointed to by this address now in `r3` into `r6`:
+
+{{{
+c004e4ac:	e5936000 	ldr	r6, [r3]
+}}}
+
+So we skip this one. The next global variable accessed is our target, freq_table, inside the for loop. By the same logic it must be the loaded at the next ldr, which is the ninth instruction:
 
 {{{
 c004e4b8:	159f5068 	ldrne	r5, [pc, #104]	; c004e528 <_binary_omap2_clk_init_cpufreq_table_start+0x90>
@@ -116,9 +122,9 @@ Ignore the supposed instruction, this is definitely a kernel memory address with
 
 = CPUfreq policy =
 
-We've made an important change before, but it's not enough. When we try to set a new frequency, CPUfreq will make a quick check to see if the value is within the minimum and maximum possible values defined in the CPUfreq policy. This policy is a simple structure derived from the frequency table we change before, but it's initialized only at boot time.
+In the previous section, we made an important step, but it's not enough. When we try to set a new frequency, CPUfreq will make a quick check to see if the value is within the minimum and maximum possible values defined in the CPUfreq policy. This policy is a simple structure derived from the frequency table we change before, but it's initialized only at boot time.
 
-Fortunately it's quite simple to change the policy in runtime. CPUfreq exports a function that returns its address, called cpufreq_cpu_get. All we have to do then is declare a struct cpufreq_policy pointing to this address and change a few values, namely policy->max and policy->cpuinfo.max_freq. Too easy :)
+Fortunately it's quite simple to change the policy in runtime. CPUfreq exports a function that returns its address, called cpufreq_cpu_get. All we have to do then is declare a struct cpufreq_policy pointing to this address and change a few values, namely policy->max, policy->cpuinfo.max_freq and policy->user_policy.max. Too easy :)
 
 = MPU opps table =
 
