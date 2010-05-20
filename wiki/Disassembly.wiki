@@ -158,7 +158,7 @@ c004e4a4:	e59f3078 	ldr	r3, [pc, #120]	; c004e524 <_binary_omap2_clk_init_cpufre
 c004e4ac:	e5936000 	ldr	r6, [r3]
 }}}
 
-So what's at the address 0xc004e524?
+So what's at address 0xc004e524?
 
 {{{
 c004e524:	c050c888 	subsgt	ip, r0, r8, lsl #17
