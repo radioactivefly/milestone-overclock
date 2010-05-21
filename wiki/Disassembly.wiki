@@ -29,7 +29,7 @@ c004e498 T omap2_clk_init_cpufreq_table
 c004e534 t omap3_dpll_recalc
 }}}
 
-This tells us that the function omap2_clk_init_cpufreq_table is at the address 0xc004e49 and occupies at most 156 bytes (0xc004e534-0xc004e498). Let's dump this area of kernel memory to a file (3221546136 being 0xc004e498 in decimal):
+This tells us that the function omap2_clk_init_cpufreq_table is at the address 0xc004e498 and occupies at most 156 bytes (0xc004e534-0xc004e498). Let's dump this area of kernel memory to a file (3221546136 being 0xc004e498 in decimal):
 
 {{{
 busybox dd bs=1 count=156 skip=3221546136 if=/dev/kmem of=/sdcard/omap2_clk_init_cpufreq_table
