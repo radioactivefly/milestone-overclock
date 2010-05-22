@@ -1,0 +1,20 @@
+#summary ChangeLog of project milestone-overclock
+#labels Featured
+
+== Version 1.1 ==
+
+App:
+
+  * Created settings menu with custom rate and custom vsel (available in the seekbar), and freq_table address and mpu_opps address (used when the module is loaded)
+  * Corrected vsel units
+
+Kernel module:
+
+  * mpu_opps now configurable in load time
+  * Improved mpu_opps address lookup
+  * Corrected vsel units
+  * Applied mattih's patch to set policy->user_policy.max
+
+== Version 1.0 - ==
+
+  * Initial release
