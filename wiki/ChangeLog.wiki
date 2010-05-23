@@ -1,7 +1,7 @@
 #summary ChangeLog of project milestone-overclock
 #labels Featured
 
-== Version 1.1 ==
+== Version 1.1 - 2010-05-23 ==
 
 App:
 
@@ -15,6 +15,6 @@ Kernel module:
   * Corrected vsel units
   * Applied mattih's patch to set policy->user_policy.max
 
-== Version 1.0 - ==
+== Version 1.0 - 2010-05-17 ==
 
   * Initial release
