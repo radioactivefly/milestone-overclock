@@ -45,7 +45,7 @@ arm-none-linux-gnueabi-objcopy --set-section-flags .data=code omap2_clk_init_cpu
 We're now able to disassemble the function:
 
 {{{
-$ arm-none-linux-gnueabi-objdump -d omap2_clk_init_cpufreq_table.elf
+$ arm-none-linux-gnueabi-objdump -D omap2_clk_init_cpufreq_table.elf
 
 omap2_clk_init_cpufreq_table.elf:     file format elf32-littlearm
 
