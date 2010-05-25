@@ -1,14 +1,27 @@
 #summary ChangeLog of project milestone-overclock
 #labels Featured
 
+== Version 1.2 - 2010-05-25 ==
+
+=== App ===
+
+  * Should work with any Milestone/Droid with stock Android 2.x
+  * Searches /proc/kallsyms for the address of omap2_clk_init_cpufreq_table and passes it to the kernel module when it is loaded
+
+=== Kernel ===
+
+  * Change the values of freq_table by writing "index frequency" to /proc/overclock/freq_table such as: echo "1 400000" > /proc/overclock/freq_table
+  * Change the values of mpu_opps by writing "index rate vsel" to /proc/overclock/mpu_opps such as: echo "3 400000000 50" > /proc/overclock/mpu_opps
+  * Autodetect freq_table and mpu_opps given omap2_clk_init_cpufreq_table's address at load time or: echo 0xc004e498 > /proc/overclock/omap2_clk_init_cpufreq_table_addr (you can find the address with: grep omap2_clk_init_cpufreq_table /proc/kallsyms)
+
 == Version 1.1 - 2010-05-23 ==
 
-App:
+=== App ===
 
   * Created settings menu with custom rate and custom vsel (available in the seekbar), and freq_table address and mpu_opps address (used when the module is loaded)
   * Corrected vsel units
 
-Kernel module:
+=== Kernel module ===
 
   * mpu_opps now configurable in load time
   * Improved mpu_opps address lookup
