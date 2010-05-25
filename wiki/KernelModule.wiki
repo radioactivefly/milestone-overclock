@@ -68,6 +68,15 @@ echo 0xc050a848 > /proc/overclock/mpu_opps_addr
 
 Finding out the values will require live disassembly of kernel code. See the [Disassembly] page for more information.
 
+Also for the more hardcore among you, you can now change values directly in freq_table and mpu_opps with (that's "index freq" and "index rate vsel"):
+
+{{{
+echo "1 400000" > /proc/overclock/freq_table
+echo "3 400000000 50" > /proc/overclock/mpu_opps
+}}}
+
+Check the results with cat /proc/overclock/freq_table and cat /proc/overclock/mpu_opps. This can be used for example to "underclock" your CPU and save battery, or to change any frequencies you wish, not just the highest one.
+
 == Recommended frequencies ==
 
 Frequencies/Voltages that appear to work well together (thanks to kabaldan for corrections):
