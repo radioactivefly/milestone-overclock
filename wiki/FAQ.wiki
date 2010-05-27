@@ -1,0 +1,10 @@
+#summary Frequently asked questions
+#labels Featured
+
+===Can I run this on the Droid even though it's called milestone-overclock?===
+
+Yes! It started out on the Milestone because of its locked down nature, but has been made to work on the Droid, and there's more on the way. Maybe I'll have to rename it ;)
+
+===I'm trying to load the module in a script but the phone crashes as soon as I set any parameter!===
+
+The module by default uses memory addresses for Milestone EU/Telus firmware. You'll have to pass it the address of a special function so that it can autodetect other firmwares. It's quite simple, see [KernelModule#Autodetect here] how to do it. Of course, loading from the App takes care of this problem.
