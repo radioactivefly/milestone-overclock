@@ -2,8 +2,11 @@
 
 If you use this project and would like to support it, or if you'd like to see it ported to your phone, you can donate via paypal. This will work as an incentive to continue its development and even aquire new android phones to overclock (the technique I use should work on any android phone but I only have a Milestone).
 
-<p align="center>
+Donate with `PayPal`:
+
 [https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=F8APRKCZCDCDU&lc=PT&item_name=Milestone%20Overclock&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif]
-</p>
+
+Or try the new Flattr service:
+<wiki:gadget url="http://stefansundin.com/stuff/flattr/google-project-hosting.xml" border="0" width="66" height="76" up_uid="12333" up_title="milestone-overclock" up_desc="Overclocking your rooted Motorola Milestone/Droid" up_tags="android,overclock,milestone,droid,motorola" up_url="http://code.google.com/p/milestone-overclock/" />
 
 Thank you.
