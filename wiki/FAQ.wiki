@@ -5,6 +5,10 @@
 
 Yes! It started out on the Milestone because of its locked down nature, but has been made to work on the Droid, and there's more on the way. Maybe I'll have to rename it ;)
 
+===Why doesn't the overclock last between reboots?===
+
+When you overclock with this app, you're merely changing values in RAM. It's not like the usual approach to overclock that involves flashing something. So you'll have to overclock again each time it boots up. To automate this process you must load the module in boot time with either [http://www.androlib.com/android.application.nk-bla-android-autostart-qmnB.aspx Autostart] or with mot_boot_mode. Please note that this is quite dangerous because if you set up the wrong values you may end up with a phone that crashes before it boots completely. I recommend Autostart because you can bypass it easily by booting in [https://supportforums.motorola.com/message/99124#99124 safe mode] which is easy to do. Otherwise you'll have to flash the phone.
+
 ===I'm trying to load the module in a script but the phone crashes as soon as I set any parameter!===
 
 The module by default uses memory addresses for Milestone EU/Telus firmware. You'll have to pass it the address of a special function so that it can autodetect other firmwares. It's quite simple, see [KernelModule#Autodetect here] how to do it. Of course, loading from the App takes care of this problem.
