@@ -5,7 +5,7 @@
 
 === App ===
 
-  * *Should work with any Milestone/Droid with stock Android 2.x*
+  * *Should work with any Milestone with stock Android 2.x*
   * Searches /proc/kallsyms for the address of omap2_clk_init_cpufreq_table and passes it to the kernel module when it is loaded
 
 === Kernel module ===
