@@ -16,3 +16,9 @@ The module by default uses memory addresses for Milestone EU/Telus firmware. You
 ===Isn't this pointless due to SetCPU?===
 
 The two are complementary, and I actually recommend to use SetCPU. First of all you need a kernel with the overclocked frequencies: you either flash one, or use this project and change them in realtime. Only then SetCPU comes in to actually set the frequency you want based on those available.
+
+===How can I set 1300 MHz?===
+
+1300 MHz is _very_ unstable, I rarely could set it and have since given up. Go to
+settings and set the custom frequency 1300000 and custom vsel 127 (or less if you
+manage it) -- this is also a known dangerous vsel (out of processor specs). IT WILL MOST LIKELY REBOOT/CRASH. You may need to remove the battery in the worst case (happened to me sometimes). All in all I don't recommend anyone trying it.
