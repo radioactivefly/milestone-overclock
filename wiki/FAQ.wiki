@@ -12,3 +12,7 @@ When you overclock with this app, you're merely changing values in RAM. It's not
 ===I'm trying to load the module in a script but the phone crashes as soon as I set any parameter!===
 
 The module by default uses memory addresses for Milestone EU/Telus firmware. You'll have to pass it the address of a special function so that it can autodetect other firmwares. It's quite simple, see [KernelModule#Autodetect here] how to do it. Of course, loading from the App takes care of this problem.
+
+===Isn't this pointless due to SetCPU?===
+
+The two are complementary, and I actually recommend to use SetCPU. First of all you need a kernel with the overclocked frequencies: you either flash one, or use this project and change them in realtime. Only then SetCPU comes in to actually set the frequency you want based on those available.
