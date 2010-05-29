@@ -79,9 +79,9 @@ echo "3 400000000 50" > /proc/overclock/mpu_opps
 
 Check the results with cat /proc/overclock/freq_table and cat /proc/overclock/mpu_opps. This can be used for example to "underclock" your CPU and save battery, or to change any frequencies you wish, not just the highest one.
 
-== Recommended frequencies ==
+== Frequencies ==
 
-Frequencies/Voltages that appear to work well together (thanks to kabaldan for corrections):
+The following table lists frequencies/voltages that appear to work well together, albeit with very conservative voltages. These are the values available in the app by default (thanks to kabaldan for corrections):
 
 || *Frequency (KHz)* || * vsel * || *Voltage (V)* ||
 || 550000 || 56 || 1.3 ||
@@ -91,3 +91,19 @@ Frequencies/Voltages that appear to work well together (thanks to kabaldan for c
 || 1200000 || 80 || 1.6 ||
 
 The maximum vsel I could use was 127. The safe upper limit in the processor specs is 1.8V which translates to vsel 96 (according to [http://wiki.droidmod.org/doku.php?id=vsel_calc wikidroid]). Frequencies above 1250000 usually reboot spontaneously.
+
+The community at [http://www.android-hilfe.de/root-hacking-modding-fuer-motorola-milestone/28049-overclocking-verwendete-spannungen.html android-hilfe] has made extensive tests to find exactly what range of voltage selections could be used in each frequency. There are variations because not all Milestones are made equal, some can handle higher voltages and frequencies than others. Here is a copy of the table they produced, available [http://www.android-hilfe.de/root-hacking-modding-fuer-motorola-milestone/28049-overclocking-verwendete-spannungen.html here] (thanks doc.payce!):
+
+<table border="1" cellpadding="3">
+<tbody align="center">
+<tr><td></td><td colspan="3">*max_vsel*</td></tr>
+<tr><td>*Frequency*</td><td>*Stable (>=)*</td><td>*Possibly unstable*</td><td>*Probably unstable (<=)*</td></tr>
+<tr><td>550</td><td>56</td><td></td><td></td></tr>
+<tr><td>800</td><td>58</td><td>56 .. 54</td><td>52</td></tr>
+<tr><td>1000</td><td>60</td><td>58 .. 56</td><td>54</td></tr>
+<tr><td>1100</td><td>64</td><td>62 .. 60</td><td>58</td></tr>
+<tr><td>1200`*`</td><td>76</td><td>74 .. 70</td><td>68</td></tr>
+<tr><td>1330`*`</td><td></td><td>84</td><td></td></tr>
+</tbody>
+</table>
+`*`: Always unstable in some CPUs! Will damage CPU on prolonged use. According to OMAP3430 datasheet, max_vsel up to 66 should be acceptable. Above 80 will certainly severly damage the CPU on long-term scale. The most appropriate and stable settings seem to be either 800 MHz or 1000 MHz at max_vsel of 56 to 60.
