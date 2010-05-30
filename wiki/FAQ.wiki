@@ -3,7 +3,7 @@
 
 ===Can I run this on the Droid even though it's called milestone-overclock?===
 
-Yes! It started out on the Milestone because of its locked down nature, but has been made to work on the Droid, at least with stock firmware. If you run into problems with it please open an issue so I can investigate further. If I make this compatible with more phones, maybe I'll have to rename it ;)
+Yes! It started out on the Milestone because of its locked down nature, but since versio 1.3 has been made to work on the Droid, at least with stock firmware. If you run into problems with it please open an issue. If I make this compatible with more phones, maybe I'll have to rename it ;)
 
 ===Why doesn't the overclock last between reboots?===
 
