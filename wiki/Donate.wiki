@@ -9,4 +9,9 @@ Donate with `PayPal`:
 Or try the new Flattr service:
 <wiki:gadget url="http://stefansundin.com/stuff/flattr/google-project-hosting.xml" border="0" width="66" height="76" up_uid="12333" up_title="milestone-overclock" up_desc="Overclocking your rooted Motorola Milestone/Droid" up_tags="android,overclock,milestone,droid,motorola" up_url="http://code.google.com/p/milestone-overclock/" />
 
-Thank you.
+=== Update 2010-05-30 ===
+
+Thanks to your support, I registered in the Adroid Market (about 20 EUR) and started publishing the app there. I also opened a Flattr account with 5 EUR.
+
+
+*Thank you.*
