@@ -15,7 +15,7 @@ The module by default uses memory addresses for Milestone EU/Telus firmware. You
 
 ===Isn't this pointless due to SetCPU?===
 
-The two are complementary, and I actually recommend to use SetCPU. First of all you need a kernel with the overclocked frequencies: you either flash one, or use this project and change them in realtime. Only then SetCPU comes in to actually set the frequency you want based on those available.
+The two are complementary, and I actually recommend to use SetCPU. First of all you need a kernel with the overclocked frequencies: you either flash one, or use this project and change them in realtime. Only then SetCPU comes in to actually set the frequency you want based on those available. By the way, configure SetCPU to Autodetect instead of using the Droid/Milestone device profile.
 
 ===How can I set 1300 MHz?===
 
