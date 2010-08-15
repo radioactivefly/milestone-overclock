@@ -26,3 +26,7 @@ The two are complementary, and I actually recommend to use SetCPU. First of all 
 1300 MHz is _very_ unstable, I rarely could set it and have since given up. Go to
 settings and set the custom frequency 1300000 and custom vsel 127 (or less if you
 manage it) -- this is also a known dangerous vsel (out of processor specs). IT WILL MOST LIKELY REBOOT/CRASH. You may need to remove the battery in the worst case (happened to me sometimes). All in all I don't recommend anyone trying it.
+
+===The app freezes when I click Load module===
+
+It means something went wrong when you whitelisted the app for root usage. When you click on that button, a popup should appear asking whether the app should have Superuser access; click Always. Now Load module should work. You can reboot to make sure everything is ok. Also check the whitelist of the Superuser app to see if Milestone Overclock is there.
