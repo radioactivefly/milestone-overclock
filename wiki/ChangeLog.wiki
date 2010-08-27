@@ -1,6 +1,23 @@
 #summary ChangeLog of project milestone-overclock
 #labels Featured
 
+== Version 1.4 - 2010-08-27 ==
+
+=== App ===
+
+  * Autoload overclock on boot. This requires a mounted external storage. If the phone freezes during boot, simply delete the file /sdcard/Android/data/pt.com.darksun.milestoneoverclock/files/autoload to disable autoload.
+  * Support for Droid X (2.1), A854, XT720 and XT701
+  * Improved root detection (tries to do a "su echo test" to check for a working su)
+
+=== Kernel module ===
+
+  * Support kernel 2.6.32 (AOSP's Froyo), although I can't get it to load on Droid no matter what vermagic I use
+  * Improve the build process to compile against multiple kernels
+  * Stop using default addresses for mpu_opps_addr and cpufreq_stats_table_addr to avoid confusion
+  * Get the address of freq_table automatically with cpufreq_frequency_get_table()
+  * Fix assignments when writing to /proc/overclock/omap2_clk_init_cpufreq_table_addr (thanks kabaldan)
+  * Fix cpufreq stats (patch by kabaldan)
+
 == Version 1.3.2 - 2010-05-31 ==
 
 === App ===
