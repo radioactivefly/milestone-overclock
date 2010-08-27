@@ -5,7 +5,7 @@
 
 === App ===
 
-  * Autoload overclock on boot. This requires a mounted external storage. If the phone freezes during boot, simply delete the file /sdcard/Android/data/pt.com.darksun.milestoneoverclock/files/autoload to disable autoload.
+  * Autoload overclock on boot. This requires a mounted external storage. If the phone freezes during boot, simply delete the file /sdcard/Android/data/pt.com.darksun.milestoneoverclock/files/autoload (or remove the sdcard) to disable autoload.
   * Support for Droid X (2.1), A854, XT720 and XT701
   * Improved root detection (tries to do a "su echo test" to check for a working su)
 
