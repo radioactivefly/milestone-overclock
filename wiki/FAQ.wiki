@@ -11,7 +11,8 @@ The error is a bit of a misnomer, most likely the real problem is that it couldn
 
 ===Why doesn't the overclock last between reboots?===
 
-When you overclock with this app, you're merely changing values in RAM. It's not like the usual approach to overclock that involves flashing something. So you'll have to overclock again each time it boots up. To automate this process you must load the module in boot time with either [http://www.androlib.com/android.application.nk-bla-android-autostart-qmnB.aspx Autostart] or with mot_boot_mode. Please note that this is quite dangerous because if you set up the wrong values you may end up with a phone that crashes before it boots completely. I recommend Autostart because you can bypass it easily by booting in [https://supportforums.motorola.com/message/99124#99124 safe mode] which is easy to do. Otherwise you'll have to flash the phone.
+When you overclock with this app, you're merely changing values in RAM. It's not like the usual approach to overclock that involves flashing something. So you'll have to overclock again each time it boots up. To automate this process you can go to the app settings and check "Autoload on boot". It requires a mounted external storage to save this setting. This way, it'll automatically load the module and overclock to the last applied frequency.
+If the phone freezes during boot, you can simply delete the file /sdcard/Android/data/pt.com.darksun.milestoneoverclock/files/autoload (or remove the sdcard) to disable autoload.
 
 ===I'm trying to load the module in a script but the phone crashes as soon as I set any parameter!===
 
