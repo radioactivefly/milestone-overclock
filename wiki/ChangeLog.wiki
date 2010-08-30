@@ -1,12 +1,23 @@
 #summary ChangeLog of project milestone-overclock
 #labels Featured
 
+== Version 1.4.1 - 2010-08-30 ==
+
+=== App ===
+
+  * Fix support for XT701
+  * Fix cpufreq_stats_table_addr when saving settings and loading the module
+
+=== Kernel Module ===
+
+  * Change cpufreq stats when writing to /proc/overclock/freq_table
+
 == Version 1.4 - 2010-08-27 ==
 
 === App ===
 
   * Autoload overclock on boot. This requires a mounted external storage. If the phone freezes during boot, simply delete the file /sdcard/Android/data/pt.com.darksun.milestoneoverclock/files/autoload (or remove the sdcard) to disable autoload.
-  * Support for Droid X (2.1), A854, XT720 and XT701
+  * Support for Droid X (2.1), A854 and XT720
   * Improved root detection (tries to do a "su echo test" to check for a working su)
 
 === Kernel module ===
