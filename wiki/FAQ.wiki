@@ -12,7 +12,7 @@ The error is a bit of a misnomer, most likely the real problem is that it couldn
 ===Why doesn't the overclock last between reboots?===
 
 When you overclock with this app, you're merely changing values in RAM. It's not like the usual approach to overclock that involves flashing something. So you'll have to overclock again each time it boots up. To automate this process you can go to the app settings and check "Autoload on boot". It requires a mounted external storage to save this setting. This way, it'll automatically load the module and overclock to the last applied frequency.
-If the phone freezes during boot, you can simply delete the file /sdcard/Android/data/pt.com.darksun.milestoneoverclock/files/autoload (or remove the sdcard) to disable autoload.
+If the phone freezes during boot, you can simply delete the file /sdcard/Android/data/pt.com.darksun.milestoneoverclock/files/autoload (or boot without the sdcard) to disable autoload.
 
 ===I'm trying to load the module in a script but the phone crashes as soon as I set any parameter!===
 
@@ -31,3 +31,7 @@ manage it) -- this is also a known dangerous vsel (out of processor specs). IT W
 ===The app freezes when I click Load module===
 
 It means something went wrong when you whitelisted the app for root usage. When you click on that button, a popup should appear asking whether the app should have Superuser access; click Always. Now Load module should work. You can reboot to make sure everything is ok. Also check the whitelist of the Superuser app to see if Milestone Overclock is there.
+
+===The frequency/vsel from android-hilfe are very different from yours, which are correct?===
+
+My values are very conservative and are meant to work on a broad number of phones. Android-hilfe's were exhaustively tested to reach safe values with very high confidence, so you should be able to use them with no harm. Still, I prefer my safer approach by default and let people customize their favorite voltages (either from settings in the app or by writing full tables to /proc/overclock/mpu_opps and /proc/overclock/freq_table).
