@@ -1,6 +1,18 @@
 #summary ChangeLog of project milestone-overclock
 #labels Featured
 
+== Version 1.4.2 - 2010-08-31 ==
+
+=== App ===
+
+  * Support Samsung Galaxy Beam
+  * Support Motorola XT702
+  * Reversed su usage from 1.4.1, should fix multiple permissions problem experienced with some Superuser apps
+
+=== Kernel Module ===
+
+  * Updated build process to support Samsung Galaxy Beam
+
 == Version 1.4.1 - 2010-08-30 ==
 
 === App ===
