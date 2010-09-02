@@ -1,4 +1,5 @@
 #summary Support this project!
+#labels Featured
 
 If you use this project and would like to support it, or if you'd like to see it ported to your phone, you can donate via paypal. This will work as an incentive to continue its development and even aquire new android phones to overclock (the technique I use should work on any android phone but I only have a Milestone).
 
