@@ -1,6 +1,19 @@
 #summary ChangeLog of project milestone-overclock
 #labels Featured
 
+== Version 1.4.3 - 2010-10-25 ==
+
+=== App ===
+
+  * Improved the preset frequencies for Droid X
+  * Support XT800W/XT800 and more XT720 versions
+
+=== Kernel Module ===
+
+  * Build process for Droid X 2.2
+  * Fix vsel setting for Droid X 2.x and others (thanks to kabaldan for hinting at this; the struct omap_opp changed to support "Smart Reflex class 1.5" technology)
+  * Remove call to omap_pm_cpu_get_freq() because it's no longer exported in Froyo (thanks tekahuna)
+
 == Version 1.4.2 - 2010-08-31 ==
 
 === App ===
