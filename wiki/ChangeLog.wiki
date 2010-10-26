@@ -1,6 +1,12 @@
 #summary ChangeLog of project milestone-overclock
 #labels Featured
 
+== Version 1.4.3.1 - 2010-10-26 ==
+
+=== App ===
+
+  * Fixed slider bar in Droid X
+
 == Version 1.4.3 - 2010-10-25 ==
 
 === App ===
