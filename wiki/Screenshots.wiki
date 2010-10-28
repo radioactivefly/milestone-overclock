@@ -5,20 +5,14 @@
 
 Everybody loves screenshots, so here's a few.
 
-*Milestone Overclock 1.2 running at 1.2 GHz:*
+*Milestone Overclock 1.4.4 running at 1.2 GHz:*
 
 <p align="center">
-http://milestone-overclock.googlecode.com/files/screenshot-milestoneoverclock12.jpg
+http://milestone-overclock.googlecode.com/files/screenshot-milestoneoverclock144.jpg
 </p>
 
-*Screenshot of SetCPU at 1.3 GHZ in a Milestone:*
+*Screenshot of SetCPU showing the system info of a Milestone at 1.2 GHz:*
 
 <p align="center">
-http://milestone-overclock.googlecode.com/files/screenshot-setcpu1300mhz.jpg
-</p>
-
-*Screenshot of SetCPU showing the system info of a Milestone at 1.3 GHz:*
-
-<p align="center">
-http://milestone-overclock.googlecode.com/files/screenshot-setcpusysteminfo.jpg
+http://milestone-overclock.googlecode.com/files/screenshot-setcpusysteminfo144.jpg
 </p>
