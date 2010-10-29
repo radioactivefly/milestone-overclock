@@ -1,4 +1,4 @@
-#summary Smashing the kernel for fun and overclock
+#summary Smashing the Android Kernel for Fun and Overclock
 #labels Phase-Implementation,Featured
 
 <p align="right">
