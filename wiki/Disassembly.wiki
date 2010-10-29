@@ -2,7 +2,7 @@
 #labels Phase-Implementation,Featured
 
 <p align="right">
-_`Fun quote from arch/arm/mach-omap2/clock34xx.c:`_
+_`Fun quote from Milestone's arch/arm/mach-omap2/clock34xx.c:`_
 <br />
 _`/* Avoid registering the 120% Overdrive with CPUFreq */`_
 </p>
