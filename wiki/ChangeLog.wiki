@@ -1,6 +1,17 @@
 #summary ChangeLog of project milestone-overclock
 #labels Featured
 
+== Version 1.4.5 - 2010-12-09 ==
+
+=== App ===
+
+  * Support Droid 1 with Froyo and Motorola Defy
+  * Numeric fields in settings now only allow numbers (thanks Nicolas Frenay)
+
+=== Kernel Module ===
+
+  * Build process for Motorola Defy
+
 == Version 1.4.4.1 - 2010-10-29 ==
 
 === App ===
