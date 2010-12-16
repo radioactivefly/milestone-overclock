@@ -1,6 +1,17 @@
 #summary ChangeLog of project milestone-overclock
 #labels Featured
 
+== Version 1.4.6 - 2010-12-16 ==
+
+=== App ===
+
+  * Support Motorola Milestone 2, Motorola Flipout, Samsung Galaxy A and Archos Tablet A70/A101
+
+=== Kernel Module ===
+
+  * Automatic detection of omap2_clk_init_cpufreq_table_addr and cpufreq_stats_update_addr in most 2.6.32 kernels (by Skrilax_CZ and kabaldan)
+  * Build process for Motorola Flipout, Samsung Galaxy A and Archos Tablet A70/A101
+
 == Version 1.4.5 - 2010-12-09 ==
 
 === App ===
