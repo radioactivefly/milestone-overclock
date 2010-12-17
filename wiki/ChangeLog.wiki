@@ -1,6 +1,12 @@
 #summary ChangeLog of project milestone-overclock
 #labels Featured
 
+== Version 1.4.6.1 - 2010-12-17 ==
+
+=== Kernel Module ===
+
+  * Rolled back the automatic detection, needs more testing
+
 == Version 1.4.6 - 2010-12-16 ==
 
 === App ===
