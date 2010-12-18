@@ -1,9 +1,9 @@
 #summary Frequently asked questions
 #labels Featured
 
-===Can I run this on the Droid even though it's called milestone-overclock?===
+===Can I run this on the Droid (or others) even though it's called milestone-overclock?===
 
-Yes! It started out on the Milestone because of its locked down nature, but since version 1.3 has been made to work on the Droid, at least with stock firmware. If you run into problems with it please open an issue. If I make this compatible with more phones, maybe I'll have to rename it ;)
+Yes! It started out on the Milestone because of its locked down nature, but since version 1.3 has been made to work on many phones with TI OMAP3 processors running stock firmware. If you run into problems with it please open an issue.
 
 ===I have the latest X rom/firmware/mod with root and loading the module fails saying that I need root===
 
@@ -11,8 +11,11 @@ The error is a bit of a misnomer, most likely the real problem is that it couldn
 
 ===Why doesn't the overclock last between reboots?===
 
-When you overclock with this app, you're merely changing values in RAM. It's not like the usual approach to overclock that involves flashing something. So you'll have to overclock again each time it boots up. To automate this process you can go to the app settings and check "Autoload on boot". It requires a mounted external storage to save this setting. This way, it'll automatically load the module and overclock to the last applied frequency.
-If the phone freezes during boot, you can simply delete the file /sdcard/Android/data/pt.com.darksun.milestoneoverclock/files/autoload (or boot without the sdcard) to disable autoload.
+When you overclock with this app, you're merely changing values in RAM. It's not like the usual approach to overclock that involves flashing something. So you'll have to overclock again each time it boots up. To automate this process you can enable the checkbox "Autoload on boot". It requires a mounted external storage to save this setting. This way, it'll automatically load the module and overclock to the last applied frequency.
+
+===The phone freezes during boot because of autoload!===
+
+You probably specified a frequency/voltage that the phone can't handle. You should test exhaustively before enabling autoload. That said, you can simply delete the file /sdcard/Android/data/pt.com.darksun.milestoneoverclock/files/autoload (or boot without the sdcard) to disable autoload.
 
 ===I'm trying to load the module in a script but the phone crashes as soon as I set any parameter!===
 
@@ -24,9 +27,7 @@ The two are complementary, and I actually recommend to use SetCPU. First of all 
 
 ===How can I set 1300 MHz?===
 
-1300 MHz is _very_ unstable, I rarely could set it and have since given up. Go to
-settings and set the custom frequency 1300000 and custom vsel 127 (or less if you
-manage it) -- this is also a known dangerous vsel (out of processor specs). IT WILL MOST LIKELY REBOOT/CRASH. You may need to remove the battery in the worst case (happened to me sometimes). All in all I don't recommend anyone trying it.
+In OMAP34xx processors (Milestone/Droid 1, etc) 1300 MHz is _very_ unstable, I rarely could set it and have since given up. Go to settings and set the custom frequency 1300000 and custom vsel 127 (or less if you manage it) -- this is also a known dangerous vsel (out of processor specs). IT WILL MOST LIKELY REBOOT/CRASH. You may need to remove the battery in the worst case (happened to me sometimes). All in all I don't recommend anyone trying it.
 
 ===The app freezes when I click Load module===
 
@@ -35,3 +36,7 @@ It means something went wrong when you whitelisted the app for root usage. When 
 ===The frequency/vsel from android-hilfe are very different from yours, which are correct?===
 
 My values are very conservative and are meant to work on a broad number of phones. Android-hilfe's were exhaustively tested to reach safe values with very high confidence, so you should be able to use them with no harm. Still, I prefer my safer approach by default and let people customize their favorite voltages (either from settings in the app or by writing full tables to /proc/overclock/mpu_opps and /proc/overclock/freq_table).
+
+===Can I change the vsel for the other frequencies the phone uses?===
+
+You can but for now it has to be done with a shell script, inserting values directly into the module using its /proc/overclock/`*` interface. To learn how to it visit the [KernelModule] page. A graphical interface for this is planned.
