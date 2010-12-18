@@ -36,7 +36,7 @@ insmod overclock.ko mpu_opps_addr=0xc050a848 max_rate=800000 max_vsel=62
 
 Remember that you are merely changing the maximum possible value that CPUfreq can choose to use. The current speed may well be lower than the one specified if the phone is idle. I recommend the use of [http://www.pokedev.com/setcpu/ SetCPU] to effectively change the current frequency through CPUfreq policies.
 
-===Autodetect===
+==Autodetection==
 
 Finding the correct mpu_opps_addr can be difficult and fortunately there's an easier way. You can ask the module to try to autodetect it if you give it the address of omap2_clk_init_cpufreq_table. The app does this automatically. You can easily find it manually with:
 
@@ -57,7 +57,9 @@ And in dmesg you should see something like this:
 [ 9361.096099] overclock: found mpu_opps_addr at 0xc050c888
 }}}
 
-If autodetect doesn't work for you, you can specify the values manually as stated earlier. Finding out the values will require live disassembly of kernel code. See the [Disassembly] page for more information.
+If autodetection doesn't work for you, you can specify the values manually as stated earlier. Finding out the values will require live disassembly of kernel code. See the [Disassembly] page for more information.
+
+==Changing the frequency/vsel tables==
 
 Also for the more hardcore among you, you can now change values directly in freq_table and mpu_opps with (that's "index freq" and "index rate vsel"):
 
