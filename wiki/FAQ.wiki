@@ -19,7 +19,7 @@ You probably specified a frequency/voltage that the phone can't handle. You shou
 
 ===I'm trying to load the module in a script but the phone crashes as soon as I set any parameter!===
 
-The module by default uses memory addresses for Milestone EU/Telus firmware. You'll have to pass it the address of a special function so that it can autodetect other firmwares. It's quite simple, see [KernelModule#Autodetect here] how to do it. Of course, loading from the App takes care of this problem.
+The module by default uses memory addresses for Milestone EU/Telus firmware. You'll have to pass it the address of a special function so that it can autodetect other firmwares. It's quite simple, see [KernelModule#Autodetection here] how to do it. Of course, loading from the App takes care of this problem.
 
 ===Isn't this pointless due to SetCPU?===
 
@@ -39,4 +39,4 @@ My values are very conservative and are meant to work on a broad number of phone
 
 ===Can I change the vsel for the other frequencies the phone uses?===
 
-You can but for now it has to be done with a shell script, inserting values directly into the module using its /proc/overclock/`*` interface. To learn how to it visit the [KernelModule] page. A graphical interface for this is planned.
+You can but for now it has to be done with a shell script, inserting values directly into the module using its /proc/overclock/`*` interface. To learn how to it visit the [KernelModule#Changing_the_frequency/vsel_tables] page. A graphical interface for this is planned.
