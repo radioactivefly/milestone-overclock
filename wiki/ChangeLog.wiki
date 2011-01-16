@@ -1,104 +1,104 @@
 #summary ChangeLog of project milestone-overclock
 #labels Featured
 
-== Version 1.4.6.1 - 2010-12-17 ==
+=== Version 1.4.6.1 - 2010-12-17 ===
 
-=== Kernel Module ===
+Kernel Module:
 
   * Rolled back the automatic detection, needs more testing
 
-== Version 1.4.6 - 2010-12-16 ==
+=== Version 1.4.6 - 2010-12-16 ===
 
-=== App ===
+App:
 
   * Support Motorola Milestone 2, Motorola Flipout, Samsung Galaxy A and Archos Tablet A70/A101
 
-=== Kernel Module ===
+Kernel Module:
 
   * Automatic detection of omap2_clk_init_cpufreq_table_addr and cpufreq_stats_update_addr in most 2.6.32 kernels (by Skrilax_CZ and kabaldan)
   * Build process for Motorola Flipout, Samsung Galaxy A and Archos Tablet A70/A101
 
-== Version 1.4.5 - 2010-12-09 ==
+=== Version 1.4.5 - 2010-12-09 ===
 
-=== App ===
+App:
 
   * Support Droid 1 with Froyo and Motorola Defy
   * Numeric fields in settings now only allow numbers (thanks Nicolas Frenay)
 
-=== Kernel Module ===
+Kernel Module:
 
   * Build process for Motorola Defy
 
-== Version 1.4.4.1 - 2010-10-29 ==
+=== Version 1.4.4.1 - 2010-10-29 ===
 
-=== App ===
+App:
 
   * Support Droid 2
 
-== Version 1.4.4 - 2010-10-28 ==
+=== Version 1.4.4 - 2010-10-28 ===
 
-=== App ===
+App:
 
   * Support leaked Milestone 2.6.32
   * Smaller slider bar
   * Moved Autoload checkbox to the main page and added sdcard status
   * Improved settings writing logic
 
-=== Kernel Module ===
+Kernel Module:
 
   * Build process for leaked Milestone 2.6.32 kernel
 
-== Version 1.4.3.1 - 2010-10-26 ==
+=== Version 1.4.3.1 - 2010-10-26 ===
 
-=== App ===
+App:
 
   * Fixed slider bar in Droid X
 
-== Version 1.4.3 - 2010-10-25 ==
+=== Version 1.4.3 - 2010-10-25 ===
 
-=== App ===
+App:
 
   * Improved the preset frequencies for Droid X
   * Support XT800W/XT800 and more XT720 versions
 
-=== Kernel Module ===
+Kernel Module:
 
   * Build process for Droid X 2.2
   * Fix vsel setting for Droid X 2.x and others (thanks to kabaldan for hinting at this; the struct omap_opp changed to support "Smart Reflex class 1.5" technology)
   * Remove call to omap_pm_cpu_get_freq() because it's no longer exported in Froyo (thanks tekahuna)
 
-== Version 1.4.2 - 2010-08-31 ==
+=== Version 1.4.2 - 2010-08-31 ===
 
-=== App ===
+App:
 
   * Support Samsung Galaxy Beam
   * Support Motorola XT702
   * Reversed su usage from 1.4.1, should fix multiple permissions problem experienced with some Superuser apps
 
-=== Kernel Module ===
+Kernel Module:
 
   * Updated build process to support Samsung Galaxy Beam
 
-== Version 1.4.1 - 2010-08-30 ==
+=== Version 1.4.1 - 2010-08-30 ===
 
-=== App ===
+App:
 
   * Fix support for XT701
   * Fix cpufreq_stats_table_addr when saving settings and loading the module
 
-=== Kernel Module ===
+Kernel Module:
 
   * Change cpufreq stats when writing to /proc/overclock/freq_table
 
-== Version 1.4 - 2010-08-27 ==
+=== Version 1.4 - 2010-08-27 ===
 
-=== App ===
+App:
 
   * Autoload overclock on boot. This requires a mounted external storage. If the phone freezes during boot, simply delete the file /sdcard/Android/data/pt.com.darksun.milestoneoverclock/files/autoload (or remove the sdcard) to disable autoload.
   * Support for Droid X (2.1), A854 and XT720
   * Improved root detection (tries to do a "su echo test" to check for a working su)
 
-=== Kernel module ===
+Kernel module:
 
   * Support kernel 2.6.32 (AOSP's Froyo), although I can't get it to load on Droid no matter what vermagic I use
   * Improve the build process to compile against multiple kernels
@@ -107,45 +107,45 @@
   * Fix assignments when writing to /proc/overclock/omap2_clk_init_cpufreq_table_addr (thanks kabaldan)
   * Fix cpufreq stats (patch by kabaldan)
 
-== Version 1.3.2 - 2010-05-31 ==
+=== Version 1.3.2 - 2010-05-31 ===
 
-=== App ===
+App:
 
   * Restore support for Milestone A853
 
-== Version 1.3 - 2010-05-30 ==
+=== Version 1.3 - 2010-05-30 ===
 
-=== App ===
+App:
 
   * *Works with the Droid*, at least with stock kernels
 
-== Version 1.2 - 2010-05-25 ==
+=== Version 1.2 - 2010-05-25 ===
 
-=== App ===
+App:
 
   * *Should work with any Milestone with stock Android 2.x*
   * Searches /proc/kallsyms for the address of omap2_clk_init_cpufreq_table and passes it to the kernel module when it is loaded
 
-=== Kernel module ===
+Kernel module:
 
   * Change the values of freq_table by writing "index frequency" to /proc/overclock/freq_table such as: echo "1 400000" > /proc/overclock/freq_table
   * Change the values of mpu_opps by writing "index rate vsel" to /proc/overclock/mpu_opps such as: echo "3 400000000 50" > /proc/overclock/mpu_opps
   * Autodetect freq_table and mpu_opps given omap2_clk_init_cpufreq_table's address at load time (load with omap2_clk_init_cpufreq_table=0xc004e498) or in runtime with: echo 0xc004e498 > /proc/overclock/omap2_clk_init_cpufreq_table_addr (you can find the address with: grep omap2_clk_init_cpufreq_table /proc/kallsyms)
 
-== Version 1.1 - 2010-05-23 ==
+=== Version 1.1 - 2010-05-23 ===
 
-=== App ===
+App:
 
   * Created settings menu with custom rate and custom vsel (available in the seekbar), and manual freq_table and mpu_opps addresses (used when the module is loaded)
   * Corrected vsel units
 
-=== Kernel module ===
+Kernel module:
 
   * mpu_opps now configurable in load time
   * Improved mpu_opps address lookup
   * Corrected vsel units
   * Applied mattih's patch to set policy->user_policy.max
 
-== Version 1.0 - 2010-05-17 ==
+=== Version 1.0 - 2010-05-17 ===
 
   * Initial release
