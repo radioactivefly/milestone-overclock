@@ -1,6 +1,17 @@
 #summary ChangeLog of project milestone-overclock
 #labels Featured
 
+=== Version 1.4.7 - 2011-01-16 ===
+
+App:
+
+  * Support Droid 2 Global, Motorola XT711, Defy running chinese Froyo
+  * Fixed race condition between insmod and setting module parameters
+
+Kernel Module:
+
+  * Added sr_adjust_vsel field when reading the /proc/overclock/mpu_opps table if SMARTREFLEX is enabled (thanks tekahuna)
+
 === Version 1.4.6.1 - 2010-12-17 ===
 
 Kernel Module:
