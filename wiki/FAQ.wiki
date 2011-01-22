@@ -40,3 +40,7 @@ My values are very conservative and are meant to work on a broad number of phone
 ===Can I change the vsel for the other frequencies the phone uses?===
 
 You can but for now it has to be done with a shell script, inserting values directly into the module using its /proc/overclock/`*` interface. To learn how to it visit the [KernelModule#Changing_the_frequency/vsel_tables KernelModule page]. A graphical interface for this is planned.
+
+===The app says "failed to load module" or "model not supported"===
+
+Please search the [http://code.google.com/p/milestone-overclock/issues/list issues] for your specific problem (including closed issues). If none matches your problem, open a new issue and include as much information as you can (the exact error message, kernel version, android version, model name, country, etc). Please don't ask for support in the wiki's comments.
