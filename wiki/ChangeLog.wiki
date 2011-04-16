@@ -1,6 +1,17 @@
 #summary ChangeLog of project milestone-overclock
 #labels Featured
 
+=== Version 1.4.8 - 2011-03-20 ===
+
+App:
+
+  * Support Motorola Milestone with official Froyo (2.2.1) rom
+  * Temporarily disabled stats lookup because of reboots
+
+Kernel Module:
+
+  * Build process for motorola milestone 2.2
+
 === Version 1.4.7 - 2011-01-16 ===
 
 App:
