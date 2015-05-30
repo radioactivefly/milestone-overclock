@@ -1,0 +1,170 @@
+<p align='right'>
+<i><code>Fun quote from Milestone's arch/arm/mach-omap2/clock34xx.c:</code></i>
+<br />
+<i><code>/* Avoid registering the 120% Overdrive with CPUFreq */</code></i>
+</p>
+
+# Introduction #
+
+When you load SetCPU, or look at /sys/devices/system/cpu/cpu0/cpufreq/scaling\_available\_frequencies, there's only a few available frequencies. Ever wondered where they come from?
+
+When you try to force a new frequency in SetCPU or by writing to /sys/devices/system/cpu/cpu0/cpufreq/scaling\_max\_freq, it's simply ignored. Ever wondered why it does that?
+
+Meet CPUfreq, the linux kernel subsystem that runs the CPU power management. It provides an abstraction layer over the hardware and exposes an easy to use interface to manage the available clock speeds according to a power governor profile. Below this abstraction is a lowlevel platform driver that actually changes frequencies on behalf of CPUfreq. What we will do is hack both layers in runtime so that it allows whatever frequency we tell it to. This isn't much of a problem when you can simply flash a custom kernel, but in some phones (increasingly more, unfortunately) such as Motorola Milestone and Droid X, that's not an option. Even so, it's easier to change it in runtime than having to flash kernels, so everyone wins.
+
+For this analysis I will use the source code from Motorola, which is probably outdated even by their own standards but is close enough. This comes in a set of tar files, particularly archive\_0115-kernel.tgz, available in the Milestone section of opensource.motorola.com which is [here](https://opensource.motorola.com/sf/frs/do/viewRelease/projects.milestone/frs.milestone.01_15_0) which should be untared over the regular android kernel as they explain in the readme. An ARM crosscompiler is needed to disassemble kernel code, I used [Sourcery G++ Lite](http://www.codesourcery.com/sgpp/lite/arm/portal/subscription?@template=lite). Finally you must have busybox with largefile support on the phone to run dd because /system/bin/dd doesn't work correctly, a suitable version is in the downloads section.
+
+# CPUfreq frequency table #
+
+The first thing I thought of doing, as a proof of concept, was to change the values of the available frequencies. This means changing the values shown in /sys/devices/system/cpu/cpu0/cpufreq/scaling\_available\_frequencies. This sysfs entry is defined by struct freq\_attr cpufreq\_freq\_attr\_scaling\_available\_freqs in drivers/cpufreq/freq\_table.c, which defines show\_available\_freqs as the function that ends up writing the file. The code is simple, it gets a frequency table specific to the cpu being queried (in our case there's only one of course) and proceeds to iterate over it, writing its values to a buffer. So, change the table, and the file will be changed accordingly. The question now is where, in the kernel memory, is this table. For this we have to go back to where it is created and populated.
+
+Let's start with CPUfreq's scaling driver initialization, which in the case of the Motorola Milestone/Droid and other phones with TI OMAP3xxx (OMAP3430 in our case) is called "omap" and lives in arch/arm/mach-omap2/. The driver initialization function is called omap\_cpu\_init defined in arch/arm/plat-omap/cpu-omap.c. Here we see it calls clk\_init\_cpufreq\_table on the freq\_table, which incidentally is also defined in this file but it's only a pointer at this stage. The clk\_init\_cpufreq\_table, defined in arch/arm/plat-omap/clock.c, is little more than a wrapper to the platform-specific initialization, which for OMAP3430 is omap2\_clk\_init\_cpufreq\_table from arch/arm/mach-omap2/clock34xx.c. Right above this function is the real declaration of this table: an array of struct cpufreq\_frequency\_table with MAX\_VDD1\_OPP+1 entries. Juicy! This is our target. However its symbol is not exported, so how can we find out the address? By disassembling an unsuspecting function that manipulates this table, such as the very omap2\_clk\_init\_cpufreq\_table that brought us here. Fortunately this function is exported, we can see its address in /proc/kallsyms:
+
+```
+# grep -A 1 omap2_clk_init_cpufreq_table /proc/kallsyms
+c004e498 T omap2_clk_init_cpufreq_table
+c004e534 t omap3_dpll_recalc
+```
+
+This tells us that the function omap2\_clk\_init\_cpufreq\_table is at the address 0xc004e498 and occupies at most 156 bytes (0xc004e534-0xc004e498). Let's dump this area of kernel memory to a file (3221546136 being 0xc004e498 in decimal):
+
+```
+busybox dd bs=1 count=156 skip=3221546136 if=/dev/kmem of=/sdcard/omap2_clk_init_cpufreq_table
+```
+
+Hey, it's clunky but it works. Now we're going to convert this to an elf file that objdump understands. Transfer the file over to a PC with the crosscompiler and run:
+
+```
+arm-none-linux-gnueabi-objcopy --change-addresses=0xc004e498 -I binary -O elf32-littlearm -B arm omap2_clk_init_cpufreq_table omap2_clk_init_cpufreq_table.elf
+arm-none-linux-gnueabi-objcopy --set-section-flags .data=code omap2_clk_init_cpufreq_table.elf
+```
+
+We're now able to disassemble the function:
+
+```
+$ arm-none-linux-gnueabi-objdump -D omap2_clk_init_cpufreq_table.elf
+
+omap2_clk_init_cpufreq_table.elf:     file format elf32-littlearm
+
+
+Disassembly of section .data:
+
+c004e498 <_binary_omap2_clk_init_cpufreq_table_start>:
+c004e498:	e1a0c00d 	mov	ip, sp
+c004e49c:	e92dd8f0 	push	{r4, r5, r6, r7, fp, ip, lr, pc}
+c004e4a0:	e24cb004 	sub	fp, ip, #4
+c004e4a4:	e59f3078 	ldr	r3, [pc, #120]	; c004e524 <_binary_omap2_clk_init_cpufreq_table_start+0x8c>
+c004e4a8:	e1a07000 	mov	r7, r0
+c004e4ac:	e5936000 	ldr	r6, [r3]
+c004e4b0:	e3560000 	cmp	r6, #0
+c004e4b4:	13a04000 	movne	r4, #0
+c004e4b8:	159f5068 	ldrne	r5, [pc, #104]	; c004e528 <_binary_omap2_clk_init_cpufreq_table_start+0x90>
+c004e4bc:	1a000005 	bne	c004e4d8 <_binary_omap2_clk_init_cpufreq_table_start+0x40>
+c004e4c0:	e89da8f0 	ldm	sp, {r4, r5, r6, r7, fp, sp, pc}
+c004e4c4:	e5054008 	str	r4, [r5, #-8]
+c004e4c8:	e2844001 	add	r4, r4, #1
+c004e4cc:	e5960028 	ldr	r0, [r6, #40]	; 0x28
+c004e4d0:	eb0427d3 	bl	c0158424 <_binary_omap2_clk_init_cpufreq_table_end+0x109ef0>
+c004e4d4:	e5050004 	str	r0, [r5, #-4]
+c004e4d8:	e5963020 	ldr	r3, [r6, #32]
+c004e4dc:	e3a01ffa 	mov	r1, #1000	; 0x3e8
+c004e4e0:	e2855008 	add	r5, r5, #8
+c004e4e4:	e2466008 	sub	r6, r6, #8
+c004e4e8:	e3530000 	cmp	r3, #0
+c004e4ec:	1afffff4 	bne	c004e4c4 <_binary_omap2_clk_init_cpufreq_table_start+0x2c>
+c004e4f0:	e3540000 	cmp	r4, #0
+c004e4f4:	1a000003 	bne	c004e508 <_binary_omap2_clk_init_cpufreq_table_start+0x70>
+c004e4f8:	e59f102c 	ldr	r1, [pc, #44]	; c004e52c <_binary_omap2_clk_init_cpufreq_table_start+0x94>
+c004e4fc:	e59f002c 	ldr	r0, [pc, #44]	; c004e530 <_binary_omap2_clk_init_cpufreq_table_start+0x98>
+c004e500:	eb0de0d2 	bl	c03c6850 <_binary_omap2_clk_init_cpufreq_table_end+0x37831c>
+c004e504:	e89da8f0 	ldm	sp, {r4, r5, r6, r7, fp, sp, pc}
+c004e508:	e59f3018 	ldr	r3, [pc, #24]	; c004e528 <_binary_omap2_clk_init_cpufreq_table_start+0x90>
+c004e50c:	e3e01001 	mvn	r1, #1
+c004e510:	e0832184 	add	r2, r3, r4, lsl #3
+c004e514:	e7834184 	str	r4, [r3, r4, lsl #3]
+c004e518:	e5821004 	str	r1, [r2, #4]
+c004e51c:	e5873000 	str	r3, [r7]
+c004e520:	e89da8f0 	ldm	sp, {r4, r5, r6, r7, fp, sp, pc}
+c004e524:	c050c888 	subsgt	ip, r0, r8, lsl #17
+c004e528:	c050bb68 	subsgt	fp, r0, r8, ror #22
+c004e52c:	c03ca7d8 	ldrsbtgt	sl, [ip], -r8
+c004e530:	c045e464 	subgt	lr, r5, r4, ror #8
+```
+
+Ok, don't panic. Focus on the source code: the first table that the code uses is mpu\_opps, a global variable, which is then assigned to prcm before the for loop, to check if prcm->rate is true. We can reasonably assume that the compiler will load the address of mpu\_opps into a register. The first time a load happens is in the fourth instruction:
+
+```
+c004e4a4:	e59f3078 	ldr	r3, [pc, #120]	; c004e524 <_binary_omap2_clk_init_cpufreq_table_start+0x8c>
+```
+
+And proceeds to load the value pointed to by this address now in `r3` into `r6`:
+
+```
+c004e4ac:	e5936000 	ldr	r6, [r3]
+```
+
+So we skip this one. The next global variable accessed is our target, freq\_table, inside the for loop. By the same logic it must be the loaded at the next ldr, which is the ninth instruction:
+
+```
+c004e4b8:	159f5068 	ldrne	r5, [pc, #104]	; c004e528 <_binary_omap2_clk_init_cpufreq_table_start+0x90>
+```
+
+The disassembler tells us that it's loading the address stored in 0xc004e528 into register `r5`. Let's see what's in this address:
+
+```
+c004e528:	c050bb68 	subsgt	fp, r0, r8, ror #22
+```
+
+Ignore the supposed instruction, this looks like a kernel memory address with the value 0xc050bb68. To test this, you can write a simple module that points a struct cpufreq\_frequency\_table at this address and whatever you write to it will reflect itself in the values of /sys/devices/system/cpu/cpu0/cpufreq/scaling\_available\_frequencies. You'll see that we have found the first address that we need. Try it! (I later found that the kernel function cpufreq\_frequency\_get\_table() returns this address. However, it was not in vain, as we shall see next.)
+
+# CPUfreq policy #
+
+In the previous section, we made an important step, but it's not enough. When we try to set a new frequency, CPUfreq will make a quick check to see if the value is within the minimum and maximum possible values defined in the CPUfreq policy. This policy is a simple structure derived from the frequency table we change before, but it's initialized only at boot time.
+
+Let's look at the source code to follow the code path that runs when we try to set a new frequency by writing to /sys/devices/system/cpu/cpu0/cpufreq/scaling\_max\_freq. First, the function `__cpufreq_set_policy` from drivers/cpufreq/cpufreq.c is called. One of the first things it does is calling is cpufreq\_driver->verify, that validates the new policy before allowing it to be set. This is a function pointer that calls a platform specific function and in our case ends up calling omap\_verify\_speed() from arch/arm/plat-omap/cpu-omap.c. Curiously, it immediately returns the ball over to CPUfreq, calling cpufreq\_frequency\_table\_verify() from drivers/cpufreq/freq\_table.c. From here it jumps to cpufreq\_verify\_within\_limits(), passing the new policy and the current policy's minimum and maximum allowed values. This is an inline function defined in include/linux/cpufreq.h that finally does something: it makes sure that the frequency we want to set is within the current policy limits. This is why simply setting a higher frequency doesn't work.
+
+Fortunately it's quite simple to change the policy in runtime. CPUfreq exports a function that returns its address, called cpufreq\_cpu\_get(). All we have to do then is declare a struct cpufreq\_policy pointing to this address and change a few values, namely policy->max, policy->cpuinfo.max\_freq and policy->user\_policy.max. Too easy :)
+
+# MPU opps table #
+
+So, CPUfreq is basically owned. It thinks our new frequency is valid and will eventually try to set it, which will trigger a call to `__cpufreq_driver_target()` in drivers/cpufreq/cpufreq.c. This in turn calls the platform driver cpufreq\_driver->target which in our case is omap\_target() from arch/arm/plat-omap/cpu-omap.c. Ignoring some of the code, which applies only to OMAP1 platforms, and looking specifically at the code block delimited by CONFIG\_ARCH\_OMAP3, we can see that it searches a table called mpu\_opps looking for the entry that best matches the new frequency.
+
+What values are in this table? Well, mpu\_opps is set in omap\_pm\_if\_early\_init() from arch/arm/plat-omap/omap-pm-srf.c, which is called by omap2\_init\_common\_hw from arch/arm/mach-omap2/io.c, which in turn comes from omap\_3430sdp\_init\_irq in arch/arm/mach-omap2/board-3430sdp.c, initialized with a few tables, among which is omap3\_mpu\_rate\_table. Finally, this table is defined in arch/arm/mach-omap2/omap3-opp.h:
+
+```
+static struct omap_opp omap3_mpu_rate_table[] = {
+        {0, 0, 0},
+        /*OPP1*/  
+        {S125M, VDD1_OPP1, 0x1E},
+        /*OPP2*/
+        {S250M, VDD1_OPP2, 0x26},
+        /*OPP3*/
+        {S500M, VDD1_OPP3, 0x30},
+        /*OPP4*/
+        {S550M, VDD1_OPP4, 0x36},
+        /*OPP5*/
+        {S600M, VDD1_OPP5, 0x3C},
+};
+```
+
+This table defines the OPerating Points (OPPs) of the Microprocessor Unit (MPU) used in the OMAP3 platform. An Operating Point is nothing more than a recommended combination of frequency and voltage. So there we have it: despite our previous modifications, the frequency will never be above 600 MHz. Unless we manage to change it, of course... And I think we saw earlier this mpu\_opps table, haven't we? That's right, the function we disassembled before uses mpu\_opps to initialize freq\_table. It's the address we discarded, the first ldr:
+
+```
+c004e4a4:	e59f3078 	ldr	r3, [pc, #120]	; c004e524 <_binary_omap2_clk_init_cpufreq_table_start+0x8c>
+...
+c004e4ac:	e5936000 	ldr	r6, [r3]
+```
+
+So what's at address 0xc004e524?
+
+```
+c004e524:	c050c888 	subsgt	ip, r0, r8, lsl #17
+```
+
+Yes, another address! Testing will prove that it points to the omap3\_mpu\_rate\_table shown above. All we have to do is change the last entry, OPP5, and the omap driver will gladly set the frequency (previously S600M) and voltage (previously 0x3C) we define.
+
+# Conclusion #
+
+We now have the means to change the kernel memory to manipulate key kernel structures that define the maximum CPU frequency possible. This was done on a Motorola Milestone with Android 2.1 which was previously impossible to overclock due to the closed firmware. What is more, I'm confident that this same method is valid for any android phone. All it takes is for someone to follow this guide, studying the source code if it doesn't use same OMAP driver, and try to recompile the module for their kernel and use the correct addresses for it (or loading the addresses into the module as described in [KernelModule](KernelModule.md)). There's a new realm of possibilities open, have fun!
+
+**Update:** turns out it the theory is sound even for newer phones with OMAP3640 and in newer kernels used in Froyo. It would be pretty cool if someone did this to other processor families, say Snapdragon or Hummingbird. Any volunteers?

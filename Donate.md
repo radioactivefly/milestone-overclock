@@ -1,0 +1,20 @@
+If you use this project and would like to support it, or if you'd like to see it ported to your phone, you can donate via paypal. This will work as an incentive to continue its development and even aquire new android phones to overclock (the technique I use should work on any android phone but I only have a Milestone).
+
+Donate with **`PayPal`** (note that they take about 0.50 euros from each donation):
+
+[![](https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=F8APRKCZCDCDU&lc=PT&item_name=Milestone%20Overclock&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted)
+
+Or try the new **Flattr** service:
+
+<wiki:gadget url="http://stefansundin.com/stuff/flattr/google-project-hosting.xml" border="0" width="66" height="76" up\_uid="12333" up\_title="milestone-overclock" up\_desc="Overclocking your rooted Motorola Milestone/Droid" up\_tags="android,overclock,milestone,droid,motorola" up\_url="http://code.google.com/p/milestone-overclock/" />
+
+### Update 2010-09-19 ###
+
+The Flattr account is almost breaking even, and `PayPal` has around 40 euros. Quite a bit far from purchasing a new phone to port Milestone Overclock over to Android Froyo/2.2, but it's still nice to have your support. Thanks again!
+
+### Update 2010-05-30 ###
+
+Thanks to your support, I registered in the Adroid Market (about 20 EUR) and started publishing the app there. I also opened a Flattr account with 5 EUR.
+
+
+**Thank you.**
